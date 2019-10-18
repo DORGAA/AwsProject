@@ -1,0 +1,95 @@
+.Block-Title{
+  text-Align : center;
+  text-decoration: underline ;
+  font-family: Helvetica;
+}
+
+.login-form{
+  display: flex;
+  flex-direction: column;
+  border: 1px black solid;
+  border-top-left-radius : 0px;
+  border-top-right-radius : 0px;
+  border-bottom-right-radius : 20px;
+  border-bottom-left-radius : 20px;
+  padding: 50px;
+  margin-left : 39.2em;
+  margin-right : 39.2em;
+  min-width: 350px;
+  
+  
+}
+
+.Label input{
+  width : 20em;
+ 
+}
+.Label {
+  margin-left : 10em;
+  margin-left : auto;
+  margin-right : auto;
+}
+.submit{
+  width : 21em;
+  margin-left : 160px;
+  margin-left : auto;
+  margin-right : auto;
+
+
+}
+
+.rem{
+  margin-left : 7.5em;
+  margin-right : auto;
+
+}
+
+a { 
+  text-decoration: none;
+  color: inherit;
+  
+}
+
+
+#header {
+  margin: 0;
+  height : 78px;
+  width : 40em;
+  margin-left : auto;
+  margin-right : auto;
+  background-color: #20B2AA;
+  color: white;
+  padding: 4px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border : 1px solid black;
+  border-top-left-radius : 20px;
+  border-top-right-radius : 20px;
+  
+
+}
+
+#header h1 {
+  margin: 0px;
+  padding-top : 10px;
+  margin-left : auto;
+  margin-right : auto;
+  
+}
+
+
+#header2 h1{
+  padding-top : 0px;
+  margin-left : 0px;
+  background-color : #20B2AA;
+  
+}
+#header2 a{
+  color : white;
+  margin-left : 10px;
+  font-family : solid Arial;
+
+}
+
+http://awsprojet.glitch.me/login?next=%2F
