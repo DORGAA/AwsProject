@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Trello</title>
+    <meta name="description" content="Trello">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="/static/main.css" />
+    {% block head %}{% endblock %}
+  </head>
+  
+  
+  <body>
+    <header id="header">
+      <h1>
+        <a href="/">Welcome To Trello </a>
+      </h1>
+        <nav>
+          {% if current_user.is_authenticated %}
+            <div>
+              <span id="user-name">{{ current_user.email }}</span>
+              &ndash;
+              <a href="{{ url_for('logout') }}" title="Logout !" id="logout">🚪</a>
+          </div>
+          {% else %}
+            <a href="{{ url_for('register_get') }}">Register</a>
+          {% endif %}
+      </nav>
+    </header>
+      {% block content %}
+      {% endblock content %}
+  </body>
+  
+  
+  
+  
+</html>
+

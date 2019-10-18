@@ -1,0 +1,17 @@
+{% extends "layout2.html" %}
+
+{% block title %}Log in{% endblock %}
+
+{% block content %}
+<center>
+  <h3>
+    Bonjour {{ current_user.name }}!
+  </h3>
+  <form method="POST" action="/loged" class="loged-form">
+    <label>Tâche à ajouter : <input type="text" name="task" /></label>
+    <input type="submit" name="" value="Send" />
+  </form>
+  
+  {{task}}
+</center>
+{% endblock %}
