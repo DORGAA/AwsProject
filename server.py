@@ -2,10 +2,11 @@ from flask import Flask, render_template, request, session, g, redirect, url_for
 import flask_socketio
 import flask_login
 import sqlite3
-
+from models.colonne import Colonne,ColonneForDisplay
+from models.tableaux import Tableau,TableauForDisplay
 from models.user import User, UserForLogin, ConnectedUser
 from models.post import Post, PostForDisplay
-
+import uuid
 
 DATABASE = '.data/db.sqlite'
 app = Flask(__name__)
@@ -56,7 +57,11 @@ def close_connection(exception):
 @app.route("/")
 @flask_login.login_required
 def home():
-  return render_template('index.html')
+   db = get_db()
+   cur = db.cursor()
+   tableau_list=TableauForDisplay.getAll(cur)
+   return render_template('index.html',tableau = tableau_list )
+  
 
 @app.route("/login", methods=['POST'])
 def login_post():
@@ -143,12 +148,62 @@ def logout():
   
 @app.route('/loged', methods=['GET'])
 def loged_get():
-    return render_template('index.html')
+    db = get_db()
+    cur = db.cursor()
+    tableau_list=TableauForDisplay.getAll(cur)
+    
+    return render_template('index.html',tableau = tableau_list )
   
 @app.route('/loged', methods=['POST'])
 def loged_post():
   task = request.form.get('task')
-  return render_template('index.html',task=task)
+ 
+
+  tableau = Tableau(str(uuid.uuid4()),task)
+  db = get_db()
+  cur = db.cursor()
+  try:
+      tableau.insert(cur)
+  except sqlite3.IntegrityError:
+    print("error")
+  
+  db.commit()
+  
+  tableau_list=TableauForDisplay.getAll(cur)
+  #print(tableau_list)
+  
+  #tableau_list=["123","123"]
+  #x=len(tableau_list)
+  return render_template('index.html' ,  tableau = tableau_list )
+
+
+@app.route('/tableau', methods=['GET'])
+def tab_get():
+    db = get_db()
+    cur = db.cursor()
+    colonnes_list=ColonneForDisplay.getAllForTab(cur,request.args.get('tab'))
+    print(colonnes_list)
+    return render_template('tableau.html',tab_id=request.args.get('tab'),colonnes_list=colonnes_list)
+  
+@app.route('/ajout_colonne', methods=['POST'])
+def ajouter_colonne():
+    tab_id=request.form.get('tableau')
+    colonne_nom=request.form.get('colonne')
+    
+    
+    colonne=Colonne(str(uuid.uuid4()),colonne_nom,tab_id)
+    db = get_db()
+    cur = db.cursor()
+    try:
+        colonne.insert(cur)
+    except sqlite3.IntegrityError:
+      print("error")
+    
+    db.commit()
+        
+    
+    return redirect("tableau?tab="+tab_id, code=302)
+  
     
 if __name__ == '__main__':
     io.run(app, debug=True)

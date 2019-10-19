@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}Log in{% endblock %}
+
+{% block content %}
+
+
+<center>
+  <h3>
+    Bonjour {{ current_user.name }}!
+  </h3>
+  <form method="POST" action="/ajout_colonne" class="loged-form">
+    <label>Ajouter colonne : <input type="text" name="colonne" /></label>
+    <input type="hidden" name="tableau" value="{{ tab_id }}"/>
+    <input type="submit" name="" value="Send" />
+  </form>
+  
+    
+  
+  <div>
+    Colonnes : 
+  </div>
+  <div class="colonnes">
+    
+    {%for i in colonnes_list %} 
+      {{ i["description"] }}
+    <div class="colonne" style="border-style: dotted;">
+    
+      <ul>
+        <li>
+        tache1
+        </li>
+      </ul>
+  <form method="POST" action="/ajout_tache" class="loged-form">
+    <label>Ajouter tache : <input type="text" name="colonne" /></label>
+    <input type="submit" name="" value="Send" />
+  </form>
+      
+      
+    </div>
+    
+    
+    
+    {% endfor %}
+  </div>
+  
+</center>
+{% endblock %}
