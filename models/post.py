@@ -1,21 +1,18 @@
 import datetime
 
 class Post:
-    def __init__(self, content, author_id):
+    def __init__(self, content, author_id,colonne_id):
         self.content = content
         self.author_id = author_id
         self.timestamp = datetime.datetime.now().timestamp()
+        self.colonne_id = colonne_id
 
     def insert(self, cursor):
         cursor.execute('''
           INSERT INTO posts 
-          ( content
-          , author_id
-          , timestamp
-          )
           VALUES 
-          ( ?, ?, ?)
-        ''', (self.content, self.author_id, self.timestamp)
+          ( ?, ?, ?,? )
+        ''', (self.content, self.author_id, self.timestamp,self.colonne_id)
         )
         
     def __repr__(self):
@@ -33,8 +30,10 @@ class Post:
         CREATE TABLE posts
         ( author_id TEXT NOT NULL
         , content TEXT
+        , colonne_id TEXT
         , timestamp DOUBLE
         , FOREIGN KEY (author_id) REFERENCES users(email)
+        , FOREIGN KEY (colonne_id) REFERENCES colonnes(nom)
         )''')
 
 class PostForDisplay:
@@ -42,14 +41,13 @@ class PostForDisplay:
         self.author_name = row['author_name']
         self.date = datetime.datetime.fromtimestamp(row['timestamp'])
         self.content = row['content']
+        self.colonne_id = row['colonne_id']
    
     
     @classmethod
     def getAll(cls, cursor):
       cursor.execute('''
-          SELECT name AS author_name, content, timestamp 
+          SELECT *
           FROM posts
-          JOIN users ON author_id=email
-          ORDER BY timestamp DESC
       ''')
       return [ cls(row) for row in cursor.fetchall() ]

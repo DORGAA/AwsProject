@@ -2,6 +2,8 @@ import sqlite3
 
 from models.user import User
 from models.post import Post
+from models.colonne import Colonne
+from models.tableaux import Tableau
 
 def make_dicts(cursor, row):
     return dict((cursor.description[idx][0], value)
@@ -15,23 +17,24 @@ cur = db.cursor()
 
 User.create_table(cur)
 Post.create_table(cur)
-
+Colonne.create_table(cur)
+Tableau.create_table(cur)
 
 users = [
-    User("Ford", "ford@betelgeuse.star", "12345"),
+    User("Ford", "test@test.test", "12345"),
     User("Arthur", "arthur@earth.planet", "12345"),
 ]
 
-posts = [
-    Post(content="Hi!", author_id="ford@betelgeuse.star"),
-    Post(content="Don't destroy the earth please!", author_id="arthur@earth.planet"),
-]
+#posts = [
+#    Post(content="Hi!", author_id="ford@betelgeuse.star"),
+#    Post(content="Don't destroy the earth please!", author_id="arthur@earth.planet"),
+#]
 
 for user in users:
     user.insert(cur)
 
-for post in posts:
-    post.insert(cur)
+#for post in posts:
+#    post.insert(cur)
 
 db.commit()
 
@@ -44,5 +47,5 @@ for user in users:
     
 print()
 print("Here are the posts inserted:")
-for post in posts:
-    print("\t", post)
+#for post in posts:
+#    print("\t", post)
